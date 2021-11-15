@@ -2,4 +2,4 @@
 
 ## About
 
-The Following repository contains reports and presentations created for my Final Cybersecurity project. This include, Red Team Report, Blue Team Report, Network Analysis and the offenvsive group presentation 
+The following repository contains reports and presentations created for my final Cybersecurity project. This include, Red Team Report, Blue Team Report, Network Analysis and the offensive group presentation .
