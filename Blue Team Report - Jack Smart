@@ -1,0 +1,78 @@
+# Blue Team: Summary of Operations
+
+## Table of Contents
+- Network Topology
+- Description of Targets
+- Monitoring the Targets
+- Patterns of Traffic & Behavior
+- Suggestions for Going Further
+
+### Network Topology
+
+The following machines were identified on the network:
+- Kali
+  - **Operating System**:
+  - Debian Kali 
+  - **Purpose**:
+  - Attack Machine
+  - **IP Address**:
+  - 192.168.1.90 
+
+- Target 1 
+  - **Operating System**:
+  - Linux
+  - **Purpose**:
+  - Wordpress Host
+  - **IP Address**:
+  - 192.168.1.110
+
+- ELK
+  - **Operating System**:
+  - Ubuntu 
+  - **Purpose**:
+  - Elastic and Kibana stack to monitor logs
+  - **IP Address**:
+  - 192.168.1.100
+
+- Capstone
+  - **Operating System**:
+  - Ubuntu 
+  - **Purpose**:
+  - Vulnerable Web Server
+  - **IP Address**:
+  - 192.168.1.105
+
+### Description of Targets
+
+
+The target of this attack was: `Target 1` (192.168.1.110).
+
+Target 1 is an Apache web server and has SSH enabled, so ports 80 and 22 are possible ports of entry for attackers. As such, the following alerts have been implemented:
+
+### Monitoring the Targets
+
+Traffic to these services should be carefully monitored. To this end, we have implemented the alerts below:
+
+#### Excessive HTTP Errors 
+
+Alert 1 is implemented as follows:
+  - **Metric**: WHEN count() GROUPED OVER top 5 ‘http.response.status_code
+  - **Threshold**: IS ABOVE 400
+  - **Vulnerability Mitigated**: Enumeration/Brute Force
+  - **Reliability**: This alert is quite reliable. Measuring error codes 400 and above will remove successful and normal responses. 400+ codes will be server errors which can be a cause for concern.
+
+#### HTTP Request Size Monitor 
+Alert 2 is implemented as follows:
+  - **Metric**: WHEN sum() of http.request.bytes OVER all documents
+  - **Threshold**: IS ABOVE 3500
+  - **Vulnerability Mitigated**: Code injection in HTTP requests (XSS and CRLF) or DDOS
+  - **Reliability**: This alert is somewhat reliable as it could potentially trigger false positives. Even legitimate HTTP Traffic could trigger this response
+#### CPU Size Monitor 
+Alert 3 is implemented as follows:
+  - **Metric**: WHEN max() OF system.process.cpu.total.pct OVER all documents
+  - **Threshold**: IS ABOVE 0.5
+  - **Vulnerability Mitigated**: Malicious software and programs that are chewing up CPU.
+  - **Reliability**: This alert is very reliable. Regardless of a program being malicious, this can still alert on excessive CPU usage and show the user where space can be cleaned up. 
+
+
+
