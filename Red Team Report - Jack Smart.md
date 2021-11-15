@@ -12,7 +12,7 @@ Nmap scan results for each machine reveal the below services and OS details:
 
 ```bash
 $ nmap -sV 192.168.1.110 #
-  # (SCAN LOCATED IN GOOGLE DRIVE)
+  
 ```
 
 This scan identifies the services below as potential points of entry:
